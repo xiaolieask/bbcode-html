@@ -1,0 +1,23 @@
+{
+  "name": "bbcode-html",
+  "version": "1.0.1",
+  "description": "bbcode to html,you can used it for your project if you have a vue or react project，good luck for you",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "bbcode",
+    "bbcodeAll",
+    "html2bbcode",
+    "bbcode2html",
+    "html",
+    "convert",
+    "conversion"
+  ],
+  "author": "xiaolie",
+  "license": "ISC",
+  "devDependencies": {
+    "html2bbcode": "^1.2.5"
+  }
+}
