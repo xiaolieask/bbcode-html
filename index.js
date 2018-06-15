@@ -1,11 +1,7 @@
-import bbcode from './src/bbcode'
-import html from './src/html2bbcode'
+
+var render = require('./src/bbcode').render;
+var HTML2BBCode = require('./src/html2bbcode').HTML2BBCode;
 module.exports = {
-  render: bbcode.render,
-  extractQuotedText: bbcode.extractQuotedText,
-  parseParams: bbcode.parseParams,
-  HTML2BBCode: html.HTML2BBCode,
-  HTMLTag: html.HTMLTag,
-  HTMLStack: html.HTMLStack,
-  BBCode: html.BBCode
+  render: render,
+  HTML2BBCode: HTML2BBCode
 }

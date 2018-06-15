@@ -27,4 +27,4 @@ new BBCODE.HTML2BBCode({
   noheadings: true
 });
 ```
-For detailed explanation on how things work, checkout the [docs for rsa-javascript](https://github.com/xiaolieask/bbcode-html).
+For detailed explanation on how things work, checkout the [docs for bbcode-html](https://github.com/xiaolieask/bbcode-html).

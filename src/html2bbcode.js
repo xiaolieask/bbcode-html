@@ -711,12 +711,10 @@
     for (var i = 0; i < this.stack.length; i++) {
       var d = this.stack[i];
       if (d instanceof HTMLTag) {
-        console.log(tab, d.name, d.attr ? JSON.stringify(d.attr) : '');
         if (d.content) {
           d.content.showtree(tab + '--', depth + 1);
         }
       } else if (typeof d === 'string') {
-        console.log(tab, JSON.stringify(d));
       }
     }
   };
@@ -739,9 +737,9 @@
     'ins': { section: 'u' },
     'u': { section: 'u' },
     'center': { section: 'center' },
-    'ul': { section: 'ul' },  // may need to treat as 'list'
-    'ol': { section: 'ol' },  // may need to treat as 'list'
-    'li': { section: 'li', newline: 1 },
+    'ul': { section: 'list' },  // may need to treat as 'list'
+    'ol': { section: 'olist' },  // may need to treat as 'list'
+    'li': { section: '*', newline: 1 },
     'blockquote': { section: 'quote' },
     'code': { section: 'code' },
     'pre': { section: 'code' },
@@ -759,8 +757,9 @@
     'h6': { section: 'h6', newline: 1 },
     'p': { newline: 1 },
     'br': { newline: 2, empty: true },
-    'table': { newline: 1 },
-    'tr': { newline: 1 },
+    'table': { section: 'table', newline: 1 },
+    'tr': { section: 'tr', newline: 1 },
+    'td': { section: 'td', newline: 1 },
     'div': { newline: 0 },
     // ignore tags
     '!doctype': { ignore: true },
@@ -1015,12 +1014,21 @@
       }
       bbs.push(tsec);
     };
-    // check font-weight & text-align
     if (htag.attr && htag.attr.style) {
       if (htag.name !== 'b' && htag.name !== 'strong') {
         var att = htag.attr.style['font-weight'];
         if (att === 'bold' || (/^\d+$/.test(att) && parseInt(att) >= 700)) {
           addbb(BBCode.maps['b']);
+        }
+      }
+      if (htag.name !== 'text-decoration-line') {
+        var att = htag.attr.style['text-decoration-line'];
+        let atts = att.split(' ');
+        if (atts.indexOf('underline') > -1) {
+          addbb(BBCode.maps['u']);
+        }
+        if (atts.indexOf('line-through') > -1) {
+          addbb(BBCode.maps['s']);
         }
       }
       if (htag.name !== 'center') {
@@ -1037,9 +1045,7 @@
         }
       }
     }
-    if (sec.section === 'list'
-        || sec.section === 'ul' || sec.section === 'ol'
-        || sec.section === 'li') {
+    if (sec.section === 'olist' || sec.section === 'list' || sec.section === 'ul' || sec.section === 'ol' || sec.section === 'li') {
       if (opts.nolist) {
         return [];
       }
@@ -1133,6 +1139,7 @@
       hstack.showtree();
     }
     var bbcode = this.convert(hstack);
+    bbcode.s = bbcode.s.replace(/\[\/\*\]/g, '')
     return bbcode;
   };
 

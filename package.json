@@ -1,6 +1,6 @@
 {
   "name": "bbcode-html",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "bbcode to html,you can used it for your project if you have a vue or react project，good luck for you",
   "main": "index.js",
   "scripts": {
