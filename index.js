@@ -1,7 +1,7 @@
 
-var render = require('./src/bbcode').render;
+var bbcode = require('./src/bbcode');
 var HTML2BBCode = require('./src/html2bbcode').HTML2BBCode;
 module.exports = {
-  render: render,
+  bbcode: bbcode,
   HTML2BBCode: HTML2BBCode
 }

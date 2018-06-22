@@ -105,7 +105,6 @@ var tmp, className, inlineValue, i, val;
 tag = tag.toLowerCase();
 params = parseParams(tag, params || undefined);
 inlineValue = params[tag];
-
 switch (tag) {
   case 'quote':
       val = '<div class="' + options.classPrefix + 'quote"';
@@ -129,13 +128,17 @@ switch (tag) {
   case 'i':
       return '<em>' + value + '</em>';
   case 'size':
-      return '<span style="font-size:">' + value + '</span>';
+      return '<span style="font-size:'+ inlineValue +'">' + value + '</span>';
+  case 'color':
+      return '<span style="color:'+ inlineValue +'">' + value + '</span>';
   case 'u':
       return '<span style="text-decoration:underline">' + value + '</span>';
   case 's':
       return '<span style="text-decoration:line-through">' + value + '</span>';
   case 'indent':
       return '<blockquote>' + value + '</blockquote>';
+  case 'font':
+    return '<span style="font-family:'+ inlineValue +'">' + value + '</span>';
   case 'list':
       tag = 'ul';
       className = options.classPrefix + 'list';

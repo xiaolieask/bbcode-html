@@ -744,8 +744,9 @@
     'code': { section: 'code' },
     'pre': { section: 'code' },
     'font': { extend: ['color', 'face', 'size'] },
-    'span': { extend: ['color', 'face', 'size'] },
+    'span': { extend: ['background-color', 'color', 'face', 'size'] },
     'color': { section: 'color', attr: 'color' },
+    'background-color': { section: 'background-color', attr: 'background-color' },
     'size': { section: 'size', attr: 'size' },
     'face': { section: 'font', attr: 'face' },
     // new line tags
@@ -956,6 +957,9 @@
             case 'color':
               tsec.attr = that.color(htag.attr[sec.attr]);
               break;
+            case 'background-color':
+              tsec.attr = that.color(htag.attr[sec.attr]);
+              break;
             default:
               tsec.attr = htag.attr[sec.attr];
               break;
@@ -969,6 +973,10 @@
                 break;
               case 'color':
                 ra = htag.attr.style['color'];
+                if (ra) ra = that.color(ra);
+                break;
+              case 'background-color':
+                ra = htag.attr.style['background-color'];
                 if (ra) ra = that.color(ra);
                 break;
               case 'font':
@@ -1023,11 +1031,10 @@
       }
       if (htag.name !== 'text-decoration-line') {
         var att = htag.attr.style['text-decoration-line'];
-        let atts = att.split(' ');
-        if (atts.indexOf('underline') > -1) {
+        if (att === 'underline') {
           addbb(BBCode.maps['u']);
         }
-        if (atts.indexOf('line-through') > -1) {
+        if (att === 'line-through') {
           addbb(BBCode.maps['s']);
         }
       }
@@ -1044,6 +1051,12 @@
           addbb(BBCode.maps['i']);
         }
       }
+      // if (htag.name !== 'background-color') {
+      //   var att = htag.attr.style['background-color'];
+      //   if (att && !opts.noalign) {
+      //     addbb(BBCode.maps['center']);
+      //   }
+      // }
     }
     if (sec.section === 'olist' || sec.section === 'list' || sec.section === 'ul' || sec.section === 'ol' || sec.section === 'li') {
       if (opts.nolist) {
