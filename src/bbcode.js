@@ -131,10 +131,6 @@ switch (tag) {
       return '<span style="font-size:'+ inlineValue +'">' + value + '</span>';
   case 'color':
       return '<span style="color:'+ inlineValue +'">' + value + '</span>';
-  case 'u':
-      return '<span style="text-decoration:underline">' + value + '</span>';
-  case 's':
-      return '<span style="text-decoration:line-through">' + value + '</span>';
   case 'indent':
       return '<blockquote>' + value + '</blockquote>';
   case 'font':
@@ -193,6 +189,12 @@ switch (tag) {
   case 'table':
   case 'tr':
   case 'td':
+  case 's':
+  case 'u':
+  case 'SUP':
+  case 'sup':
+  case 'sub':
+  case 'SUB':
       return '<' + tag + '>' + value + '</' + tag + '>';
   case 'youtube':
       return '<object class="' + options.classPrefix + 'video" width="425" height="350"><param name="movie" value="http://www.youtube.com/v/' + value + '"></param><embed src="http://www.youtube.com/v/' + value + '" type="application/x-shockwave-flash" width="425" height="350"></embed></object>';
@@ -225,6 +227,8 @@ switch (tag) {
           }
       }
       return val + '/>';
+    default:
+      return '<' + tag + '>' + value + '</' + tag + '>';
 }
 
 return fullMatch;

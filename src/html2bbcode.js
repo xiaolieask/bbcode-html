@@ -24,7 +24,7 @@
   HTMLTag.newlinetags = ['div', 'p', 'br', 'li', 'tr'].concat(HTMLTag.headingtags);
   HTMLTag.noemptytags = ['head', 'style', 'script',
     'span', 'a', 'font', 'color', 'size', 'face',
-    'strong', 'b', 'em', 'i', 'del', 's', 'ins', 'u'];
+    'strong', 'b', 'em', 'i', 'del', 's', 'ins', 'u', 'sub', 'sup'];
   HTMLTag.noemptyattrtags = ['img'];
 
   HTMLTag.prototype.findquoteend = function (script, start, multiline) {
@@ -736,6 +736,8 @@
     's': { section: 's' },
     'ins': { section: 'u' },
     'u': { section: 'u' },
+    'sup': { section: 'sup' },
+    'sub': { section: 'sub' },
     'center': { section: 'center' },
     'ul': { section: 'list' },  // may need to treat as 'list'
     'ol': { section: 'olist' },  // may need to treat as 'list'
@@ -859,8 +861,6 @@
   BBCode.prototype.toString = function () {
     return this.s;
   };
-
-  // opts: transsize, imagescale
   function HTML2BBCode(opts) {
     this.opts = opts ? opts : {};
   }
@@ -1031,10 +1031,10 @@
       }
       if (htag.name !== 'text-decoration-line') {
         var att = htag.attr.style['text-decoration-line'];
-        if (att === 'underline') {
+        if (att && att.indexOf('underline') > -1) {
           addbb(BBCode.maps['u']);
         }
-        if (att === 'line-through') {
+        if (att && att.indexOf('line-through') > -1) {
           addbb(BBCode.maps['s']);
         }
       }
