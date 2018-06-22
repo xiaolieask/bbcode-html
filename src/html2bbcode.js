@@ -24,7 +24,7 @@
   HTMLTag.newlinetags = ['div', 'p', 'br', 'li', 'tr'].concat(HTMLTag.headingtags);
   HTMLTag.noemptytags = ['head', 'style', 'script',
     'span', 'a', 'font', 'color', 'size', 'face',
-    'strong', 'b', 'em', 'i', 'del', 's', 'ins', 'u', 'sub', 'sup'];
+    'strong', 'b', 'em', 'i', 'del', 's', 'ins', 'u', 'sub', 'sup', 'marquee'];
   HTMLTag.noemptyattrtags = ['img'];
 
   HTMLTag.prototype.findquoteend = function (script, start, multiline) {
@@ -732,6 +732,9 @@
     'i': { section: 'i' },
     'strong': { section: 'b' },
     'b': { section: 'b' },
+    'marquee': { section: 'marquee' },
+    'move': { section: 'move' },
+    'fly': { section: 'fly' },
     'del': { section: 's' },
     's': { section: 's' },
     'ins': { section: 'u' },
@@ -770,6 +773,7 @@
     'style': { ignore: true },
     'script': { ignore: true },
     'meta': { ignore: true },
+    'behavior': { ignore: true },
     'link': { ignore: true },
   };
 
@@ -949,6 +953,7 @@
       }
       var tsec = { section: sec.section };
       if (sec.attr) {
+        console.log(sec.attr) // 待定
         if (htag.attr) {
           switch (sec.section) {
             case 'size':
@@ -1022,7 +1027,9 @@
       }
       bbs.push(tsec);
     };
+    console.log(htag)
     if (htag.attr && htag.attr.style) {
+      console.log(444)
       if (htag.name !== 'b' && htag.name !== 'strong') {
         var att = htag.attr.style['font-weight'];
         if (att === 'bold' || (/^\d+$/.test(att) && parseInt(att) >= 700)) {
@@ -1051,12 +1058,14 @@
           addbb(BBCode.maps['i']);
         }
       }
-      // if (htag.name !== 'background-color') {
-      //   var att = htag.attr.style['background-color'];
-      //   if (att && !opts.noalign) {
-      //     addbb(BBCode.maps['center']);
-      //   }
-      // }
+    }
+    if (htag.name === 'marquee') {
+      var att = htag.attr['behavior'];
+      if (att && att === 'alternate') {
+        addbb(BBCode.maps['fly']);
+      } else {
+        addbb(BBCode.maps['move']);
+      }
     }
     if (sec.section === 'olist' || sec.section === 'list' || sec.section === 'ul' || sec.section === 'ol' || sec.section === 'li') {
       if (opts.nolist) {
@@ -1104,6 +1113,7 @@
       for (var i = 0; i < hs.length; i++) {
         var s = hs[i];
         if (s instanceof HTMLTag) {
+          console.log(s.name)
           if (s.name in BBCode.maps) {
             var fnewline = 0;
             var sec = BBCode.maps[s.name];

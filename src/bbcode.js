@@ -131,6 +131,10 @@ switch (tag) {
       return '<span style="font-size:'+ inlineValue +'">' + value + '</span>';
   case 'color':
       return '<span style="color:'+ inlineValue +'">' + value + '</span>';
+  case 'fly':
+      return '<marquee behavior="alternate">' + value + '</marquee>';
+  case 'move':
+      return '<marquee>' + value + '</marquee>';
   case 'indent':
       return '<blockquote>' + value + '</blockquote>';
   case 'font':

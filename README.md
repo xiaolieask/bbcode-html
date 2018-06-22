@@ -5,7 +5,7 @@ npm i bbcode-html --save-dev
 # bbcode使用
 ```javascript
 import BBCODE from 'bbcode-html'
-BBCODE.render("[url=\"http://www.baidu.com\"]百度[/url]")
+BBCODE.bbcode.render("[url=\"http://www.baidu.com\"]百度[/url]")
 // <a href="www.baidu.com" class="ask_link" target="_blank">百度</a>
 var converter = new BBCODE.HTML2BBCode({
         // imagescale: true,
