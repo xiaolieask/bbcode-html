@@ -7,10 +7,17 @@ npm i bbcode-html --save-dev
 import BBCODE from 'bbcode-html'
 BBCODE.render("[url=\"http://www.baidu.com\"]百度[/url]")
 // <a href="www.baidu.com" class="ask_link" target="_blank">百度</a>
-
-var converter = new BBCODE.HTML2BBCode(Options);
-var bbcode = converter.feed(data);
-console.log(bbcode.toString());
+var converter = new BBCODE.HTML2BBCode({
+        // imagescale: true,
+        // transsize: true,
+        // nolist: true,
+        // table: true,
+        // noalign: true,
+        // noheadings: true
+      })
+var bbcode = converter.feed(this.editorContent)
+console.log(bbcode.toString())
+console.log(BBCODE.bbcode.render(bbcode.toString()))
 ```
 # Options配置
 ```javascript
